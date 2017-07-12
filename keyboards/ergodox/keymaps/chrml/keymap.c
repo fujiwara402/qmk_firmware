@@ -2,6 +2,7 @@
 #include "debug.h"
 #include "action_layer.h"
 #include "version.h"
+
 #define BASE 0 // default layer
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
@@ -24,18 +25,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |   `~   |   Q  |   W  |   E  |   R  |   T  | [{(  |           |  ]}) |   Y  |   U  |   I  |   O  |   P  |   =+   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | Ctrl   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   ;: |   '"   |
- * |--------+------+------+------+------+------| Kana |           | Eisu |------+------+------+------+------+--------|
+ * | Ctrl   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  | ;:/L2|   '"   |
+ * |--------+------+------+------+------+------| SYMB |           | BASE |------+------+------+------+------+--------|
  * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /? | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |  L2  |  L1  | Alt  |Super | Esc  |                                       |  L1  | LEFT | DOWN |  UP  |RIGHT|
- *   `----------------------------------'                                       `---------------------------------'
+ *   |  L1  |Insert| Alt  |Super | Esc  |                                       |  BS  | Hone |  End | PgDn | PgUp |
+ *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.  
- *                                        | MDIA | SYMB |       |VolDwn| VolUp|
+ *                                        | UNDO | REDO |       |VolDwn| VolUp|
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       | REDO |      |      |
- *                                 | Space|Backsp| Base |       |------| Tab  |Enter |
- *                                 |      |ace   |      |       | UNDO |      |      |
+ *                                 |      |      | MDIA |       | Mute |      |      |
+ *                                 | Space| Tab  |------|       |------|  L1  |Enter |
+ *                                 |      |      | Kana |       | Eisu |      |      |
  *                                 `--------------------'       `--------------------'
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
@@ -45,20 +46,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_BSLS,        KC_1,        KC_2,      KC_3,    KC_4,   KC_5,   S(KC_COMM),
         KC_GRV,         KC_Q,        KC_W,      KC_E,    KC_R,   KC_T,   KC_LBRC,
 	KC_LCTL,        KC_A,        KC_S,      KC_D,    KC_F,   KC_G,
-        KC_LSFT,        CTL_T(KC_Z), KC_X,      KC_C,    KC_V,   KC_B,   KC_LANG2,
-        MO(MDIA),       MO(SYMB),    KC_LALT,   KC_LGUI, KC_ESC,
-                                                              TO(MDIA),  TO(SYMB),
-                                                                         TO(BASE),
-                                                     KC_SPC,  KC_BSPC,   TO(BASE),
+        KC_LSFT,        CTL_T(KC_Z), KC_X,      KC_C,    KC_V,   KC_B,   TO(SYMB),
+        MO(SYMB),       KC_INS,      KC_LALT,   KC_LGUI, KC_ESC,
+                                                                 UNDO,   REDO,
+                                                                         TO(MDIA),
+                                                         KC_SPC, KC_TAB, KC_LANG2,
         // right hand
-             S(KC_DOT),KC_6,  KC_7,   KC_8,    KC_9,    KC_0,     KC_MINS,
-             KC_RBRC,  KC_Y,  KC_U,   KC_I,    KC_O,    KC_P,     KC_EQL,
-                       KC_H,  KC_J,   KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
-             KC_LANG1, KC_N,  KC_M,   KC_COMM, KC_DOT,  KC_SLSH,  KC_LSFT,
-                             MO(SYMB),KC_LEFT, KC_DOWN, KC_UP,    KC_RGHT,
+             S(KC_DOT),KC_6,  KC_7,   KC_8,    KC_9,    KC_0,             KC_MINS,
+             KC_RBRC,  KC_Y,  KC_U,   KC_I,    KC_O,    KC_P,             KC_EQL,
+                       KC_H,  KC_J,   KC_K,    KC_L,    LT(MDIA,KC_SCLN), KC_QUOT,
+             TO(BASE), KC_N,  KC_M,   KC_COMM, KC_DOT,  KC_SLSH,          KC_LSFT,
+                              KC_BSPC,KC_HOME, KC_END,  KC_PGDN,          KC_PGUP,
              KC_VOLD,  KC_VOLU,
-             REDO,
-             UNDO,     KC_TAB, KC_ENT
+             KC_MUTE,
+             KC_LANG1, MO(SYMB), KC_ENT 
     ),
 /* Keymap 1: Symbol Layer
  *
