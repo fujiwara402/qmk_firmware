@@ -1,0 +1,22 @@
+version: '2'
+services:
+  qmk_firmware:
+    build: .
+    environment:
+      keyboard: ergodox_ez
+      subproject:
+      keymap: chrml
+    volumes:
+      - .:/qmk
+      - /qmk/.build
+  teensy_loader:
+    image: minodisk/teensy_loader:0.0.1
+    depends_on:
+      - qmk_firmware
+    privileged: true
+    environment:
+      hex: ergodox_ez_chrml
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+    volumes_from:
+      - qmk_firmware
