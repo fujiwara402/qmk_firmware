@@ -19,12 +19,16 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "orthodox.h"
-#include "action_layer.h"
-#include "eeconfig.h"
+#include QMK_KEYBOARD_H
 #include "drashna.h"
 
-extern keymap_config_t keymap_config;
+#ifdef INDICATOR_LIGHTS
+extern userspace_config_t userspace_config;
+
+uint8_t last_mod;
+uint8_t last_led;
+uint8_t last_osm;
+#endif
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -36,86 +40,72 @@ extern keymap_config_t keymap_config;
 #define XXXXXXX KC_NO
 
 
-#ifdef TAP_DANCE_ENABLE
-enum {
-  TD_FLSH = 0,
-};
-
-
-
-
-
-// on the fourth tap, set the keyboard on flash state
-// and set the underglow to red, because red == bad
-void dance_flsh_finished(qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count >= 4) {
-#ifdef RGBLIGHT_ENABLE
-    rgblight_mode(1);
-    rgblight_setrgb(0xff, 0x00, 0x00);
-#endif
-    reset_tap_dance(state);
-    reset_keyboard();
-  }
-}
-
-
-
-//Tap Dance Definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-  //Once for Blue, Twice for Green, Thrice for Red, and four to flash
-  [TD_FLSH] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_flsh_finished, NULL),
-
-};
-#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-[_QWERTY] = KEYMAP(\
-  KC_ESC,     KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                                                   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-  KC_TAB,     KC_A,    KC_S,    KC_D,    KC_F,    KC_G,      KC_UP, XXXXXXX,  KC_DOWN,        KC_LEFT, XXXXXXX, KC_RIGHT, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-  KC_LSFT,    CTL_T(KC_Z), KC_X, KC_C,   KC_V,    KC_B,      LOWER, KC_SPACE, KC_BSPC,        KC_DEL,  KC_ENT,  RAISE,    KC_N,    KC_M,    KC_COMM, KC_DOT, CTL_T(KC_SLASH), KC_LGUI \
+[_QWERTY] = LAYOUT_wrapper(\
+  KC_ESC,  _________________QWERTY_L1_________________,                                                               _________________QWERTY_R1_________________, KC_BSPC,
+  KC_TAB,  _________________QWERTY_L2_________________,          ALT_APP, OS_LGUI,         KC_LALT, OS_RGUI,          _________________QWERTY_R2_________________, KC_QUOT,
+  KC_MLSF, _________________QWERTY_L3_________________, LOWER,   KC_SPACE,KC_BSPC,         KC_DEL,  KC_ENT,  RAISE,   _________________QWERTY_R3_________________, KC_MRSF
 ),
 
-[_COLEMAK] = KEYMAP(\
-  KC_ESC,     KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,                                                                   KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC, \
-  KC_TAB,     KC_A,    KC_R,    KC_S,    KC_T,    KC_D,      KC_UP, XXXXXXX,  KC_DOWN,        KC_LEFT, XXXXXXX, KC_RIGHT, KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT, \
-  KC_LSFT,    CTL_T(KC_Z), KC_X, KC_C,   KC_V,    KC_B,      LOWER, KC_SPACE, KC_BSPC,        KC_DEL,  KC_ENT,  RAISE,    KC_K,    KC_M,    KC_COMM, KC_DOT,  CTL_T(KC_SLASH), KC_LGUI \
+[_COLEMAK] = LAYOUT_wrapper(\
+  KC_ESC,  _________________COLEMAK_L1________________,                                                               _________________COLEMAK_R1________________, KC_BSPC,
+  KC_TAB,  _________________COLEMAK_L2________________,          ALT_APP, OS_LGUI,         KC_LALT, OS_RGUI,          _________________COLEMAK_R2________________, KC_QUOT,
+  KC_MLSF, _________________COLEMAK_L3________________, LOWER,   KC_SPACE,KC_BSPC,         KC_DEL,  KC_ENT,  RAISE,   _________________COLEMAK_R3________________, KC_MRSF
 ),
 
-[_DVORAK] = KEYMAP(\
-    KC_ESC,   KC_QUOT, KC_COMM, KC_DOT, KC_P,     KC_Y,                                                                   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC, \
-    KC_TAB,   KC_A,    KC_O,    KC_E,   KC_U,     KC_I,      KC_UP, XXXXXXX,  KC_DOWN,        KC_LEFT, XXXXXXX, KC_RIGHT, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_MINS, \
-    KC_LSFT, CTL_T(KC_SCLN), KC_Q, KC_J, KC_K,    KC_X,      LOWER, KC_SPACE, KC_BSPC,        KC_DEL,  KC_ENT,  RAISE,    KC_B,    KC_M,    KC_W,    KC_V,    CTL_T(KC_Z), KC_LGUI \
+[_DVORAK] = LAYOUT_wrapper(\
+  KC_ESC,  _________________DVORAK_L1_________________,                                                               _________________DVORAK_R1_________________, KC_BSPC,
+  KC_TAB,  _________________DVORAK_L2_________________,          ALT_APP, OS_LGUI,         KC_LALT, OS_RGUI,          _________________DVORAK_R2_________________, KC_MINS,
+  KC_MLSF, _________________DVORAK_L3_________________, LOWER,   KC_SPACE,KC_BSPC,         KC_DEL,  KC_ENT,  RAISE,   _________________DVORAK_R3_________________, KC_MRSF
 ),
-[_WORKMAN] = KEYMAP(\
-    KC_ESC,   KC_QUOT, KC_COMM, KC_DOT, KC_P,     KC_Y,                                                                   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC, \
-    KC_TAB,   KC_A,    KC_O,    KC_E,   KC_U,     KC_I,      KC_UP, XXXXXXX,  KC_DOWN,        KC_LEFT, XXXXXXX, KC_RIGHT, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_MINS, \
-    KC_LSFT, CTL_T(KC_SCLN), KC_Q, KC_J, KC_K,    KC_X,      LOWER, KC_SPACE, KC_BSPC,        KC_DEL,  KC_ENT,  RAISE,    KC_B,    KC_M,    KC_W,    KC_V,    CTL_T(KC_Z), KC_LGUI \
+[_WORKMAN] = LAYOUT_wrapper(\
+  KC_ESC,  _________________WORKMAN_L1________________,                                                               _________________WORKMAN_R1________________, KC_BSPC,
+  KC_TAB,  _________________WORKMAN_L2________________,          ALT_APP, OS_LGUI,         KC_LALT, OS_RGUI,          _________________WORKMAN_R2________________, KC_MINS,
+  KC_MLSF, _________________WORKMAN_L3________________, LOWER,   KC_SPACE,KC_BSPC,         KC_DEL,  KC_ENT,  RAISE,   _________________WORKMAN_R3________________, KC_MRSF
 ),
-
-[_LOWER] = KEYMAP(\
-  KC_TILD,    KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                                                KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC, \
-  KC_DEL,     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,   XXXXXXX, KC_F12,          _______, XXXXXXX, KC_RCTL, XXXXXXX, KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, KC_PIPE, \
-  TD(TD_FLSH),KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, _______, _______,          _______, _______, _______, XXXXXXX, KC_HOME,    KC_COMM,    KC_DOT,  KC_END,  _______ \
-),
-
-[_RAISE] = KEYMAP(\
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                                                   KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
-  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,  XXXXXXX, KC_F12,           _______, XXXXXXX, _______, XXXXXXX, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, \
-  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______, _______, _______,          _______, _______, _______, XXXXXXX, KC_PGUP, KC_COMM, KC_DOT,  KC_PGDN, _______ \
+[_MODS] = LAYOUT_wrapper(\
+  _______, _______, _______, _______, _______, _______,                                                               _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______,          _______, _______,         _______, _______,          _______, _______, _______, _______, _______, _______,
+  KC_LSFT, _______, _______, _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
-[_ADJUST] = KEYMAP(\
-  KC_MAKE,    KC_RESET, TD(TD_FLSH), _______, _______, _______,                                                                _______, _______, _______, _______, _______, _______,  \
-  _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, _______, XXXXXXX, _______,          _______, XXXXXXX, _______, AG_SWAP, KC_QWERTY, KC_COLEMAK, KC_DVORAK, KC_WORKMAN, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, MAGIC_TOGGLE_NKRO, KC_MUTE, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY  \
+[_LOWER] = LAYOUT_wrapper(\
+  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                                                KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
+  KC_F11,  _________________FUNC_LEFT_________________,           _______, _______,         _______, _______,          _______, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE,
+  KC_F12,  _________________FUNC_RIGHT________________,  _______, _______, _______,         _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______
+),
+
+[_RAISE] = LAYOUT_wrapper(\
+  KC_GRV,  ________________NUMBER_LEFT________________,                                                               ________________NUMBER_RIGHT_______________, KC_BSPC,
+  _______, _______, _______, _______, _______, _______,          _______, _______,         _______, _______,          _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______,         _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______
+),
+
+[_ADJUST] = LAYOUT_wrapper(\
+  KC_MAKE, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG,                                                               KC_SEC1, KC_SEC2, KC_SEC3, KC_SEC4, KC_SEC5, KC_RESET,
+  VRSN,    _______, CK_TOGG, AU_ON,   AU_OFF,  AG_NORM,          _______, _______,         _______, KC_NUKE,          AG_SWAP, QWERTY,  COLEMAK, DVORAK,  WORKMAN, EPRM,
+  TG(_MODS),RGB_RMOD,RGB_HUD,RGB_SAD, RGB_VAD, KC_RGB_T,_______, _______, _______,         _______, _______, _______, MG_NKRO, KC_MUTE, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY
 )
 
 
 };
 
 
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
-  return true;
+bool indicator_is_this_led_used(uint8_t index) {
+  switch (index) {
+#ifdef INDICATOR_LIGHTS
+    case SHFT_LED1:
+    case SHFT_LED2:
+    case CTRL_LED1:
+    case CTRL_LED2:
+    case GUI_LED1:
+    case GUI_LED2:
+      return true;
+      break;
+#endif
+    default:
+    return false;
+  }
 }
-
