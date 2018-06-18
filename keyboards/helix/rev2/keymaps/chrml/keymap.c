@@ -42,8 +42,8 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   BACKLIT,
-  EISU,
   KANA,
+  EISU,
   RGBRST
 };
 
