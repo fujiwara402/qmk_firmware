@@ -76,53 +76,54 @@ enum macro_keycodes {
 #define KC_CUT   RCTL(KC_X)
 #define KC_PASTE RCTL(KC_V)
 #define KC_CTLES CTL_T(KC_ESC)
+#define KC_SFTSP SFT_T(KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-       TILD,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,   EQL,\
+        GRV,     Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,   EQL,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,  LOWA,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,  RAIZ,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  MINS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+--r---+------|
-                                  GUIEI, CTLES,   SPC,      ENT,  BSPC, RAYKN \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   ),
 
   [_LOWER] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      XXXXX, XXXXX, PASTE, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+      XXXXX,  EXLM,    AT,  HASH,   DLR,  PERC,                   CIRC,  AMPR,  ASTR,  LPRN,  RPRN,  VOLU,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB, XXXXX,  COPY ,  CUT, XXXXX, XXXXX,                   LEFT,  DOWN,    UP, RIGHT, XXXXX, XXXXX,\
+      CTLTB, XXXXX, PASTE,  COPY,   CUT, XXXXX,                   LEFT,  DOWN,    UP, RIGHT, XXXXX,  VOLD,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, XXXXX,  UNDO,  REDO, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LSFT, XXXXX,  UNDO,  REDO, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  MUTE,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI,   ESC,   SPC,      ENT,  BSPC, RAYKN \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   ),
 
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      XXXXX,  EXLM,    AT,  HASH,  LCBR,  RCBR,                   BSLS,     7,     8,     9, XXXXX, XXXXX,\
+      XXXXX,    F1,    F2,    F3,  LCBR,  RCBR,                   BSLS,     7,     8,     9,   F10,   F11,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      CTLTB,   DLR,  PERC,  CIRC,  LPRN,  RPRN,                    DOT,     4,     5,     6, XXXXX, XXXXX,\
+      CTLTB,    F4,    F5,    F6,  LPRN,  RPRN,                    DOT,     4,     5,     6,   F12,   F13,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT,  AMPR,  ASTR,  PIPE,  LBRC,  RBRC,                      0,     1,     2,     3, XXXXX, XXXXX,\
+       LSFT,    F7,    F8,    F9,  LBRC,  RBRC,                      0,     1,     2,     3,   F14,   F15,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI,  ESC,   SPC,      ENT,  BSPC, RAYKN \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   ),
 
   [_ADJUST] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        RST,  LRST, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+        RST,  LRST, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,   F16,   F17,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LTOG,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LTOG,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,   F18,   F19,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      LSMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+      LSMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,   F20, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI,   ESC,   SPC,      ENT,  BSPC, RAYKN \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   )
 };
