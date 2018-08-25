@@ -69,7 +69,7 @@ enum macro_keycodes {
 #define KC_ALTKN ALT_T(KC_LANG2)
 #define KC_LOWA  LT(_LOWER, KC_A)
 #define KC_RAIZ  LT(_RAISE, KC_Z)
-#define KC_RAYKN LT(_RAISE, KC_LANG2)
+#define KC_RAYTB LT(_RAISE, KC_TAB)
 #define KC_UNDO  RCTL(KC_Z)
 #define KC_REDO  RCTL(RSFT(KC_Z))
 #define KC_COPY  RCTL(KC_C)
@@ -77,6 +77,7 @@ enum macro_keycodes {
 #define KC_PASTE RCTL(KC_V)
 #define KC_CTLES CTL_T(KC_ESC)
 #define KC_SFTSP SFT_T(KC_SPC)
+#define KC_SFTKN SFT_T(KC_LANG2)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
@@ -85,9 +86,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,  LOWA,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT,  RAIZ,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  MINS,\
+      SFTKN,  RAIZ,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  MINS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+--r---+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYTB \
                               //`--------------------'  `--------------------'
   ),
 
@@ -99,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT, XXXXX,  UNDO,  REDO, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  MUTE,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYTB \
                               //`--------------------'  `--------------------'
   ),
 
@@ -111,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,    F7,    F8,    F9,  LBRC,  RBRC,                      0,     1,     2,     3,   F14,   F15,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYTB \
                               //`--------------------'  `--------------------'
   ),
 
@@ -123,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       LSMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,   F20, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYTB \
                               //`--------------------'  `--------------------'
   )
 };
