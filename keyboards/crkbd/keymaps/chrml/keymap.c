@@ -78,6 +78,7 @@ enum macro_keycodes {
 #define KC_CTLES CTL_T(KC_ESC)
 #define KC_SFTSP SFT_T(KC_SPC)
 #define KC_SFTKN SFT_T(KC_LANG2)
+#define KC_RAYKN LT(_RAISE, KC_LANG2)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
@@ -86,9 +87,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       CTLTB,  LOWA,     S,     D,     F,     G,                      H,     J,     K,     L,  SCLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      SFTKN,  RAIZ,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  MINS,\
+       LSFT,  RAIZ,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  MINS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+--r---+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYTB \
+                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   ),
 
