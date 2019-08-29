@@ -67,7 +67,7 @@ enum macro_keycodes {
 #define KC_CTLES CTL_T(KC_ESC)
 #define KC_SFTSP SFT_T(KC_SPC)
 #define KC_SFTKN SFT_T(KC_LANG2)
-#define KC_RAYKN LT(_RAISE, KC_LANG2)
+#define KC_RAYKN LT(_RAISE, KC_LANG1)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,  RAIZ,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  MINS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+--r---+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYKN \
+                                   RALT, CTLES,   SPC,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   ),
 
@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT, XXXXX,  UNDO,  REDO, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  MUTE,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYTB \
+                                   RALT, CTLES,   SPC,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   ),
 
@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,    F7,    F8,    F9,  LBRC,  RBRC,                      0,     1,     2,     3,   F14,   F15,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYTB \
+                                   RALT, CTLES,   SPC,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   ),
 
@@ -114,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       LSMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX,   F20, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  GUIEI, CTLES, SFTSP,      ENT,  BSPC, RAYTB \
+                                   RALT, CTLES,   SPC,      ENT,  BSPC, RAYKN \
                               //`--------------------'  `--------------------'
   )
 };
